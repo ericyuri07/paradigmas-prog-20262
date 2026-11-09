@@ -1,9 +1,10 @@
 services:
 
   app:
+    container_name: jomodas-app
     build: .
     ports:
-      - "8020:8020"
+      - "8021:8020"
     volumes:
       - ./:/var/www/html
     user: "1000:1000"
@@ -11,23 +12,25 @@ services:
       - mysql
 
   mysql:
+    container_name: jomodas-mysql
     image: mysql:8.4
     ports:
-      - "3308:3306"
+      - "3309:3306" 
     environment:
-      MYSQL_DATABASE: paradigmas-prog
-      MYSQL_USER: paradigmas
+      MYSQL_DATABASE: jomodas_db
+      MYSQL_USER: jomodas_user
       MYSQL_PASSWORD: secret
       MYSQL_ROOT_PASSWORD: root
     volumes:
-      - mysql-data:/var/lib/mysql
+      - jomodas-mysql-data:/var/lib/mysql
 
   adminer:
+    container_name: jomodas-adminer
     image: adminer
     ports:
-      - "8040:8080"
+      - "8041:8080"
     depends_on:
       - mysql
 
 volumes:
-  mysql-data:
+  jomodas-mysql-data:
